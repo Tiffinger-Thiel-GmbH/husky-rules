@@ -6,6 +6,9 @@
   "repository": "git+https://github.com/Tiffinger-Thiel-GmbH/husky-rules.git",
   "author": "Tiffinger & Thiel GmbH",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "gitmoji": "node tools/gitmoji.js",
