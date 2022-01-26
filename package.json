@@ -1,5 +1,5 @@
 {
-  "name": "husky-rules",
+  "name": "@tiffinger-thiel/husky-rules",
   "version": "1.0.1",
   "description": "Collection of Husky Git hooks",
   "main": "index.js",
