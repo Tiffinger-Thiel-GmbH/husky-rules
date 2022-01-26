@@ -217,13 +217,13 @@ export async function isInMerge(gitRoot: string): Promise<boolean> {
   debug('isInMerge');
 
   return new Promise((resolve, reject) => {
-    cp.exec(`git --git-dir="${gitRoot}" git rev-parse -q --verify MERGE_HEAD`, { encoding: 'utf-8' }, (err, stdout, stderr) => {
+    cp.exec(`git --git-dir="${gitRoot}" rev-parse -q --verify MERGE_HEAD`, { encoding: 'utf-8' }, (err, stdout, stderr) => {
       if (err) {
-        return reject(err);
+        return resolve(false);
       }
 
       if (stderr) {
-        return reject(new Error(String(stderr)));
+        return resolve(false);
       }
 
       resolve(String(stdout).trim().length > 0);
@@ -232,10 +232,10 @@ export async function isInMerge(gitRoot: string): Promise<boolean> {
 }
 
 export async function isInDetachedMode(gitRoot: string): Promise<boolean> {
-  debug('isInMerge');
+  debug('isInDetachedMode');
 
   return new Promise((resolve, reject) => {
-    cp.exec(`git --git-dir="${gitRoot}" git rev-parse --abbrev-ref HEAD`, { encoding: 'utf-8' }, (err, stdout, stderr) => {
+    cp.exec(`git --git-dir="${gitRoot}" rev-parse --abbrev-ref HEAD`, { encoding: 'utf-8' }, (err, stdout, stderr) => {
       if (err) {
         return reject(err);
       }
@@ -243,7 +243,7 @@ export async function isInDetachedMode(gitRoot: string): Promise<boolean> {
       if (stderr) {
         return reject(new Error(String(stderr)));
       }
-
+      debug(String(stdout).trim());
       resolve(String(stdout).trim() === 'HEAD');
     });
   });

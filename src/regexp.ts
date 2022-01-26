@@ -10,6 +10,7 @@ export async function enforceBranchRegexp(): Promise<void> {
   const config = await loadConfig();
 
   if (await git.isInDetachedMode(gitRoot)) {
+    log('branch is in detached mode');
     process.exit(0);
   }
 

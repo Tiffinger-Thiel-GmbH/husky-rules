@@ -6,9 +6,9 @@ import { error, log } from './log';
 
 void (async (): Promise<void> => {
   try {
-    if (process.argv[1] === 'gitmoji') {
+    if (process.argv.find(arg => arg === 'gitmoji')) {
       await enforceGitmoji();
-    } else if (process.argv[1] === 'enforceRegexpBranch') {
+    } else if (process.argv.find(arg => arg === 'enforceRegexpBranch')) {
       await enforceBranchRegexp();
     }
   } catch (err: unknown) {

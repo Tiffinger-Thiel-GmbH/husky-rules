@@ -3,6 +3,9 @@
   "version": "1.0.3",
   "description": "Collection of Husky Git hooks",
   "bin": "./bin/index.js",
+  "files": [
+    "bin"
+  ],
   "repository": "git+https://github.com/Tiffinger-Thiel-GmbH/husky-rules.git",
   "author": "Tiffinger & Thiel GmbH",
   "license": "MIT",
@@ -14,7 +17,7 @@
     "gitmoji": "node tools/gitmoji.js",
     "clean": "rimraf -- ./bin/*",
     "build": "yarn clean && tsc",
-    "release": "release-it"
+    "release": "yarn build && release-it"
   },
   "devDependencies": {
     "@tiffinger-thiel/eslint-config": "^1.3.0",
