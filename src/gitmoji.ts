@@ -16,7 +16,7 @@ export async function enforceGitmoji(): Promise<void> {
   }
 
   // eslint-disable-next-line @rushstack/security/no-unsafe-regexp
-  const reg = new RegExp(`^${gitmoji.regexp} .+$`);
+  const reg = new RegExp(`^${config.beforeGitmojiRegexp}${gitmoji.regexp} .+$`);
   if (!reg.test(messageInfo.cleanMessage)) {
     log(message);
     process.exit(1);

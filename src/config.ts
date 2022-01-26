@@ -3,6 +3,7 @@ import { debug, error } from './log';
 
 export interface JPCMConfig {
   branchRegexp: string;
+  beforeGitmojiRegexp: string;
   commentChar: string; // Default comment char in the message
   allowEmptyCommitMessage: boolean;
   gitRoot: string;
@@ -10,6 +11,7 @@ export interface JPCMConfig {
 
 const defaultConfig = {
   branchRegexp: '([A-Z]+-\\d+)',
+  beforeGitmojiRegexp: '([A-Z]+-\\d+)',
   commentChar: '#',
   allowEmptyCommitMessage: false,
   gitRoot: '',
