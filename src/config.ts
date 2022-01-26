@@ -1,0 +1,57 @@
+import { cosmiconfig } from 'cosmiconfig';
+import { debug, error } from './log';
+
+export interface JPCMConfig {
+  branchRegexp: string;
+  commentChar: string; // Default comment char in the message
+  allowEmptyCommitMessage: boolean;
+  gitRoot: string;
+}
+
+const defaultConfig = {
+  branchRegexp: '([A-Z]+-\\d+)',
+  commentChar: '#',
+  allowEmptyCommitMessage: false,
+  gitRoot: '',
+} as JPCMConfig;
+
+function resolveConfig(configPath: string): string {
+  try {
+    return require.resolve(configPath);
+  } catch {
+    return configPath;
+  }
+}
+
+export async function loadConfig(configPath?: string): Promise<JPCMConfig> {
+  try {
+    const explorer = cosmiconfig('husky-rules', {
+      searchPlaces: [
+        'package.json',
+        '.huskyrulesrc',
+        '.huskyrulesrc.json',
+        '.huskyrulesrc.yaml',
+        '.huskyrulesrc.yml',
+        'husky-rules.config.js',
+      ],
+    });
+
+    const config = configPath ? await explorer.load(resolveConfig(configPath)) : await explorer.search();
+
+    debug(`Loaded config: ${JSON.stringify(config)}`);
+
+    if (config && !config.isEmpty) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      const result = { ...defaultConfig, ...config.config };
+      debug(`Used config: ${JSON.stringify(result)}`);
+      return result as JPCMConfig;
+    }
+  } catch (err) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    error(`Loading configuration failed with error: ${err}`);
+  }
+
+  const result = { ...defaultConfig };
+  debug(`Used config: ${JSON.stringify(result)}`);
+  return result;
+}
