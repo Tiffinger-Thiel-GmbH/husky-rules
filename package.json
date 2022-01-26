@@ -2,7 +2,7 @@
   "name": "@tiffinger-thiel/husky-rules",
   "version": "1.0.2",
   "description": "Collection of Husky Git hooks",
-  "main": "index.js",
+  "bin": "./bin/index.js",
   "repository": "git+https://github.com/Tiffinger-Thiel-GmbH/husky-rules.git",
   "author": "Tiffinger & Thiel GmbH",
   "license": "MIT",
