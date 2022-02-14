@@ -10,13 +10,13 @@ export async function enforceGitmoji(): Promise<void> {
   const config = await loadConfig();
   const { messageInfo, messageFilePath } = git.getCommitMessage(config);
 
-  if (await git.isInMerge(gitRoot)) {
+  if ((await git.isInMerge(gitRoot)) && !messageInfo.cleanMessage.startsWith('🔀')) {
     git.prefixCommitMessage('🔀', messageInfo, messageFilePath, config);
     process.exit(0);
   }
 
   // eslint-disable-next-line @rushstack/security/no-unsafe-regexp
-  const reg = new RegExp(`^${config.beforeGitmojiRegexp}${gitmoji.regexp} .+$`);
+  const reg = new RegExp(`^${config.beforeGitmojiRegexp}${gitmoji.regexp} `);
   if (!reg.test(messageInfo.cleanMessage)) {
     log(message);
     process.exit(1);
