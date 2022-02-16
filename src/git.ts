@@ -199,7 +199,7 @@ export async function getBranchName(gitRoot: string): Promise<string> {
   debug('gitBranchName');
 
   return new Promise((resolve, reject) => {
-    cp.exec(`git --git-dir="${gitRoot}" symbolic-ref --short HEAD`, { encoding: 'utf-8' }, (err, stdout, stderr) => {
+    cp.exec(`git --git-dir="${gitRoot}" rev-parse --abbrev-ref HEAD`, { encoding: 'utf-8' }, (err, stdout, stderr) => {
       if (err) {
         return reject(err);
       }
@@ -233,20 +233,7 @@ export async function isInMerge(gitRoot: string): Promise<boolean> {
 
 export async function isInDetachedMode(gitRoot: string): Promise<boolean> {
   debug('isInDetachedMode');
-
-  return new Promise((resolve, reject) => {
-    cp.exec(`git --git-dir="${gitRoot}" rev-parse --abbrev-ref HEAD`, { encoding: 'utf-8' }, (err, stdout, stderr) => {
-      if (err) {
-        return reject(err);
-      }
-
-      if (stderr) {
-        return reject(new Error(String(stderr)));
-      }
-      debug(String(stdout).trim());
-      resolve(String(stdout).trim() === 'HEAD');
-    });
-  });
+  return getBranchName(gitRoot).then(branch => branch.trim() === 'HEAD');
 }
 
 export function getCommitMessage(config: JPCMConfig): { messageInfo: MessageInfo; messageFilePath: string } {
