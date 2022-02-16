@@ -1,6 +1,6 @@
 {
   "name": "@tiffinger-thiel/husky-rules",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Collection of Husky Git hooks",
   "bin": "./bin/index.js",
   "files": [
