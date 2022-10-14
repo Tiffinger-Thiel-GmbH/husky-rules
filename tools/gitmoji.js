@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const packageJson = require(path.join(__dirname, "../package.json"))
 
-const additionalEmojis = ['🐋']
+const additionalEmojis = ['🐋', '🤡']
 
 https.get("https://raw.githubusercontent.com/carloscuesta/gitmoji/master/src/data/gitmojis.json", (res) => {
   let body = "";
